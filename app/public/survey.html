@@ -28,9 +28,9 @@
         
   <form action="/api/friends" method="POST"> 
     <label for='name'>Name:</label>
-    <textarea type="text" name="name"></textarea>
+    <textarea type="text" name="name" id='name'></textarea>
     <label for='photo'>Photo URL:</label>
-    <textarea type="text" name="photo"></textarea>
+    <textarea type="text" name="photo" id='photo'></textarea>
 
     <h3>Question 1</h3>
         <select class="form-control chosen-select" id="q1" name='q1'>
@@ -169,8 +169,10 @@
 $(function() {
 
 
+
     // Capture the form inputs 
     $("#submit").on("click", function(){
+        event.preventDefault();
         console.log('test');
         // Form validation
         function validateForm() {
@@ -196,16 +198,19 @@ $(function() {
                 name: $("#name").val(),
                 photo: $("#photo").val(),
                 scores: [$("#q1").val(), $("#q2").val(), $("#q3").val(), $("#q4").val(), $("#q5").val(), $("#q6").val(), $("#q7").val(), $("#q8").val(), $("#q9").val(), $("#q10").val(), ]
-            }
+            };
 
 
             // Grab the URL of the website
             var currentURL = window.location.origin;
+            console.log(currentURL);
+            console.log(userData);
 
             // AJAX post the data to the friends API. 
             $.post(currentURL + "/api/friends", userData, function(data){
 
                 // Grab the result from the AJAX post so that the best match's name and photo are displayed.
+                console.log(data);
                 $("#matchName").text(data.name);
                 $('#matchImg').attr("src", data.photo);
 
@@ -221,6 +226,7 @@ $(function() {
         
         return false;
     });
+});
 
 
   </script>
