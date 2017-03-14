@@ -31,8 +31,12 @@ function appendObject(obj){
   var configFile = fs.readFileSync('./app/data/friends.json');
   var config = JSON.parse(configFile);
   config.push(obj);
-  var configJSON = JSON.stringify(config);
+  var configJSON = JSON.stringify(config, null, 4);
   fs.writeFileSync('./app/data/friends.json', configJSON);
+}
+
+function returnMatch(){
+	
 }
 
 
