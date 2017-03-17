@@ -22,9 +22,17 @@ router.post('/api/friends', function(req, res) {
 	console.log('post');
 	console.log(req.body);
 	data.push(req.body);
+	console.log('scores');
+	console.log(req.body['scores[]']);
+	res.json(returnMatch(req.body, returnFriendsData()));
 	appendObject(req.body);
-	res.json(req.body);
 });
+
+function returnFriendsData(){
+	  var configFile = fs.readFileSync('./app/data/friends.json');
+  	  var config = JSON.parse(configFile);
+  	  return config;
+}
 
 
 function appendObject(obj){
@@ -35,8 +43,30 @@ function appendObject(obj){
   fs.writeFileSync('./app/data/friends.json', configJSON);
 }
 
-function returnMatch(){
-	
+function returnMatch(user, friends){
+	//where friends is an array of user objects
+	var fArray;
+
+	var closestMatch = [-1,99999];
+	console.log('user scores 0 : ');
+	console.log(user['scores[]']);
+	console.log('user');
+	console.log(user);
+	var uArray = user['scores[]'];
+
+	for (var i = 0; i < friends.length; i++){
+		fArray = friends[i]['scores[]'];
+		var sum = 0;
+		for (var x = 0; x < fArray.length; x++) {
+			console.log('farray: ' + fArray)
+			sum += Math.abs(uArray[x]-fArray[x]);
+		}
+		if (sum < closestMatch[1]) {
+			//updating closestMatch if less than current
+			closestMatch = [i*1,sum];
+		}
+	}
+	return friends[closestMatch[0]];
 }
 
 

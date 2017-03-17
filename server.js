@@ -14,8 +14,8 @@ var port = process.env.port || 3000;
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.use('/', require('./app/routing/htmlRoutes'));
-app.use('/', require('./app/routing/apiRoutes'));
+app.use('/',require('./app/routing/htmlRoutes'));
+app.use('/',require('./app/routing/apiRoutes'));
 
 var server = app.listen(3000, function () {
 

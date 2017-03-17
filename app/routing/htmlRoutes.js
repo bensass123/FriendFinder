@@ -18,6 +18,7 @@ console.log(path.join(__dirname, "/../public/"));
 
 //home root
 router.get('/', function(req, res) {
+	console.log('get');
         res.sendFile(path.join(__dirname, "/../public/home.html"));
 });
 
